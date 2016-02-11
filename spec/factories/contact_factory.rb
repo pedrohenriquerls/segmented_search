@@ -1,6 +1,6 @@
 
 FactoryGirl.define do
-  factory :caontact_sherlock do
+  factory :sherlock, class: 'Contact' do
     name 'Sherlock Holmes'
     email 'sherlock@gmail.com'
     state 'United Kingdom'
@@ -8,7 +8,7 @@ FactoryGirl.define do
     age 57
   end
 
-  factory :caontact_moriarty do
+  factory :moriarty, class: 'Contact' do
     name 'Moriarty'
     email 'moriarty@gmail.com'
     state 'United Kingdom'
