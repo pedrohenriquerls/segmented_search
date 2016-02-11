@@ -13,6 +13,14 @@ FactoryGirl.define do
     email 'moriarty@gmail.com'
     state 'United Kingdom'
     role 'Professor'
-    age 57
+    age 47
+  end
+
+  factory :soares, class: 'Contact' do
+    name 'Jô Soares'
+    email 'jo@gmail.com'
+    state 'Rio de Janeiro'
+    role 'Apresentador'
+    age 23
   end
 end

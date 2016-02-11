@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160211171411) do
 
   create_table "query_segments", force: :cascade do |t|
     t.string   "name"
-    t.string   "query"
+    t.string   "params"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
