@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20160211171411) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "query_params", force: :cascade do |t|
+  create_table "query_segments", force: :cascade do |t|
     t.string   "name"
     t.string   "query"
     t.datetime "created_at", null: false

@@ -1,6 +1,6 @@
-class CreateQueryParams < ActiveRecord::Migration
+class CreateQuerySegments < ActiveRecord::Migration
   def change
-    create_table :query_params do |q|
+    create_table :query_segments do |q|
       q.string :name
       q.string :query
       q.timestamps null: false
