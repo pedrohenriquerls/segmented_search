@@ -1,0 +1,6 @@
+{
+  "name": "Segmentation",
+  "description": "A project about segmentation",
+  "image": "heroku/ruby",
+  "addons": [ "heroku-postgresql" ]
+}
