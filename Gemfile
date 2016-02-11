@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'puma'
 
+gem 'bootstrap-sass'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -38,7 +40,11 @@ group :development, :test do
   gem 'byebug'
 end
 
-gem 'rspec-rails', group: :test
+group :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
