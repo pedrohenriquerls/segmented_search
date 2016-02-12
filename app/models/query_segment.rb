@@ -24,11 +24,11 @@ class QuerySegment < ActiveRecord::Base
 
   def params_to_query
     query  = ''
-    params.each do |key, value|
+    params.each do |key, object|
       if key.to_s == GROUP
-        query += " #{value} "
+        query += " #{object} "
       elsif
-        query += "#{key} #{value}"
+        query += "#{key} #{object['operator']} #{object['value']}"
       end
     end
     query
