@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @query_segment.name %></h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Estado</th>
+    <th>Cargo</th>
+    <th>Idade</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @query_segment.contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.name %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.state %></td>
+        <td><%= contact.role %></td>
+        <td><%= contact.age %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', query_segments_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Query Segments</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Query</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @query_segments.each do |query_segment| %>
+      <tr>
+        <td>query_segment.name</td>
+        <td>query_segment.params_to_query</td>
+        <td><%= link_to 'Show', query_segment %></td>
+        <td><%= link_to 'Edit', edit_query_segment_path(query_segment) %></td>
+        <td><%= link_to 'Destroy', query_segment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Query segment', new_query_segment_path %>
