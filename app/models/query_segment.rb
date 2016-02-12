@@ -4,34 +4,31 @@ class QuerySegment < ActiveRecord::Base
   include ActiveModel::Validations
   validates_with QueryBlacklistValidator
 
-  GROUP='group'
-
-  validates_presence_of :name, :params
-  attr_accessor :params
+  validates_presence_of :name, :criteria
 
   def contacts
-    Contact.where(params_to_query)
+    Contact.where(criteria_to_query)
   end
 
-  def params=(params)
-
-    @params = params.to_json
+  def criteria=(p)
     super
+    @criteria = JSON.generate(p) rescue p
   end
 
-  def params
-    JSON.parse(@params) rescue ''
-  end
-
-  def params_to_query
-    query  = ''
-    params.each do |key, object|
-      if key.to_s == GROUP
-        query += " #{object} "
-      elsif
-        query += "#{key} #{object['operator']} #{object['value']}"
+  def criteria_to_query
+    q  = ''
+    JSON.parse(criteria).each do |key, object|
+      value = if Operators::MODEL_ATTRIBUTES_STRING.include? key
+        "'#{object['value']}'"
+      else
+        object['value']
       end
+
+      q += "#{key} #{object['operator']} #{value}"
+
+      group = object['group']
+      q += " #{group} " unless group.nil?
     end
-    query
+    q
   end
 end

@@ -12,6 +12,7 @@ function QuerySegmentForm(OPERATOR_STRING, OPERATOR_INTEGER, MODEL_ATTRIBUTES_ST
   this.$container = $('#form_container')
 
   this.new_group();
+  this.assign_form()
 }
 
 QuerySegmentForm.prototype = {
@@ -26,11 +27,10 @@ QuerySegmentForm.prototype = {
     var form_html = this.form_template(form_params)
     this.$container.append(form_html)
     this.assign_group_events(group_name)
-    this.assign_form()
   },
   group_name: function(number){
     if(!number)
-      number = this.$container.children().length
+      number = this.$container.children('.bs-group').length
     return 'group-'+number
   },
   assign_group_events: function(group_name){
@@ -45,7 +45,7 @@ QuerySegmentForm.prototype = {
         $value = $group.find('.value'),
         $parent = $group.find('.operator_container')
 
-      if(_.indexOf(me.MODEL_ATTRIBUTES_STRING, name) != -1){
+      if(me.is_string_attr(name)){
         $parent.html(me.operator_template(string_operators))
         $value.attr('type', 'text')
       } else{
@@ -53,27 +53,64 @@ QuerySegmentForm.prototype = {
         $value.attr('type', 'number')
       }
     })
+
+    $group.next('.operator_logical').on('change', function(){
+      var logical_operator = $(this).val()
+      if(_.isEmpty(logical_operator)){
+        $(this).next().remove()
+        $(this).remove()
+      } else
+        me.new_group()
+    })
+  },
+  is_string_attr: function(name){
+    return -1 < _.indexOf(this.MODEL_ATTRIBUTES_STRING, name)
   },
   get_all_attributes: function(){
     return this.MODEL_ATTRIBUTES_STRING.concat(this.MODEL_ATTRIBUTES_INTEGER)
   },
   assign_form: function(){
     var me = this;
-    $('#submit').on('click', function(e{
+    $('#submit').on('click', function(e){
       e.preventDefault();
-      console.log(me.groups_to_json())
+
+      var $form = $(this).parent(),
+        data = {
+          query_segment:{
+            name: $('#query_segment_name').val(),
+            criteria: JSON.stringify(me.groups_to_json())
+          }
+        }
+
+      $.ajax({
+        url: $form.attr('action'),
+        method: $form.attr('method'),
+        data: data,
+        success: function(response){
+          $('body').html(response);
+        }
+      })
     })
   },
   groups_to_json: function(){
-    var json = {}
-    _.forEach(this.$container.children(), function(group){
+    var json = {},
+      me = this
+
+    _.forEach(this.$container.children('.bs-group'), function(group){
       var $group = $(group)
-      var name = $group.find('.attribute_name').val()
+      var name = $group.find('.attribute_name').val(),
+        logical_operator = $group.next('.operator_logical').val(),
+        value = $group.find('.value').val()
+
       json[name] = {
         operator: $group.find('.operator').val(),
-        value: $group.find('.value').val()
+        value: value
       }
+
+      if(!_.isEmpty(logical_operator))
+        json[name]['group'] = logical_operator
     })
+
     return json
   }
 }

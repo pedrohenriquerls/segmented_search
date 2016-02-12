@@ -14,8 +14,8 @@
   <tbody>
     <% @query_segments.each do |query_segment| %>
       <tr>
-        <td>query_segment.name</td>
-        <td>query_segment.params_to_query</td>
+        <td><%= query_segment.name %></td>
+        <td><%= query_segment.criteria_to_query %></td>
         <td><%= link_to 'Show', query_segment %></td>
         <td><%= link_to 'Edit', edit_query_segment_path(query_segment) %></td>
         <td><%= link_to 'Destroy', query_segment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

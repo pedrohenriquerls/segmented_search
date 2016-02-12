@@ -8,14 +8,13 @@ describe QuerySegment do
 
     expect(Contact.count).to eq 2
 
-    params = {
-        state: {operator: '=', value:'\'United Kingdom\''},
-        group: 'AND',
+    criteria = {
+        state: {operator: '=', value:'United Kingdom', group: 'AND'},
         age: {operator:'>', value: 50}
-    }
+    }.to_json
 
     segment = QuerySegment.new
-    segment.params=params
+    segment.criteria=criteria
     segment.name = 'England people'
 
     expect(segment.save!).to be_truthy
@@ -26,43 +25,40 @@ describe QuerySegment do
   end
 
   it 'avoid the possible sql injection' do
-    params = {
-        state: {operator: '=', value:'\'United Kingdom\';DROP TABLE contacts;'},
-        group: 'AND',
+    criteria = {
+        state: {operator: '=', value:'United Kingdom;DROP TABLE contacts;', group: 'AND'},
         age: {operator: '>', value: 50}
-    }
+    }.to_json
 
     segment = QuerySegment.new
-    segment.params=params
+    segment.criteria=criteria
     segment.name = 'England people'
 
     expect(segment.save).to be_falsey
-    segment.errors.messages[:params].should include(I18n.t('query_segment.invalid_words'))
+    segment.errors.messages[:criteria].should include(I18n.t('query_segment.invalid_words'))
   end
 
-  describe '.params_to_query' do
+  describe '.criteria_to_query' do
     it 'should parse the hash to query' do
-      params = {
-          name: {operator: '=', value:'\'Sherlock Holmes\''},
-          group: 'AND',
+      criteria = {
+          name: {operator: '=', value:'Sherlock Holmes', group: 'AND'},
           age: {operator: '<', value: '40'}
-      }
+      }.to_json
 
       segment = QuerySegment.new
-      segment.params=params
-      expect(segment.params_to_query).to eq('name = \'Sherlock Holmes\' AND age < 40')
+      segment.criteria=criteria
+      expect(segment.criteria_to_query).to eq('name = \'Sherlock Holmes\' AND age < 40')
     end
 
     it 'should parse the hash to query' do
-      params = {
-          name: {operator: '=', value: '\'Sherlock Holmes\''},
-          group: 'OR',
-          state: {operator: '=', value: '\'SP\''}
-      }
+      criteria = {
+          name: {operator: '=', value: 'Sherlock Holmes', group: 'OR'},
+          state: {operator: '=', value: 'SP'}
+      }.to_json
 
       segment = QuerySegment.new
-      segment.params=params
-      expect(segment.params_to_query).to eq('name = \'Sherlock Holmes\' OR state = \'SP\'')
+      segment.criteria=criteria
+      expect(segment.criteria_to_query).to eq('name = \'Sherlock Holmes\' OR state = \'SP\'')
     end
   end
 end

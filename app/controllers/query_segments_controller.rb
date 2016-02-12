@@ -24,9 +24,7 @@ class QuerySegmentsController < ApplicationController
   # POST /query_segments
   # POST /query_segments.json
   def create
-    byebug
     @query_segment = QuerySegment.new(query_segment_params)
-
     respond_to do |format|
       if @query_segment.save
         format.html { redirect_to @query_segment, notice: 'Query segment was successfully created.' }
@@ -70,6 +68,6 @@ class QuerySegmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def query_segment_params
-      params.require(:query_segment).permit(:name, :params)
+      params.require('query_segment').permit('name', 'criteria')
     end
 end
