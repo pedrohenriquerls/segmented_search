@@ -28,8 +28,8 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
-        format.json { render :show, status: :created, location: @contact }
+        format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.save_success', model: 'Contato') }
+        format.json { render :index, status: :created }
       else
         format.html { render :new }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class ContactsController < ApplicationController
   def update
     respond_to do |format|
       if @contact.update(contact_params)
-        format.html { redirect_to @contact, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: @contact }
+        format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.update_success', model: 'Contato') }
+        format.json { render :index, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class ContactsController < ApplicationController
   def destroy
     @contact.destroy
     respond_to do |format|
-      format.html { redirect_to contacts_url, notice: 'Contact was successfully destroyed.' }
+      format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.delete_success', model: 'Contato') }
       format.json { head :no_content }
     end
   end
@@ -69,6 +69,6 @@ class ContactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.fetch(:contact, {})
+      params.require(:contact).permit(:name, :role, :state, :email, :age)
     end
 end

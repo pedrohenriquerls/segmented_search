@@ -21,6 +21,11 @@
   </div>
 
   <div class="form-group">
+    <label>Estado</label>
+    <%= select(:contact, :state, Contact::STATES, {}, {class: 'form-control'}) %>
+  </div>
+
+  <div class="form-group">
     <label>Idade</label>
     <%= f.text_field :age, class: 'form-control', placeholder: 'Idade', type: 'number' %>
   </div>

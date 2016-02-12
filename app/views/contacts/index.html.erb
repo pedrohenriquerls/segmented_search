@@ -1,18 +1,28 @@
-<p id="notice"><%= notice %></p>
+<p class="bg-info"><%= notice %></p>
 
-<h1>Listing Contacts</h1>
+<h1>Contatos</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Estado</th>
+      <th>Cargo</th>
+      <th>Idade</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @contacts.each do |contact| %>
       <tr>
-        <td><%= link_to 'Show', contact %></td>
+        <td><%= contact.name %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.state %></td>
+        <td><%= contact.role %></td>
+        <td><%= contact.age %></td>
+
         <td><%= link_to 'Edit', edit_contact_path(contact) %></td>
         <td><%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

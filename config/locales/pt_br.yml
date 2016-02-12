@@ -2,6 +2,18 @@ pt_br:
   query_segment:
     invalid_words: Sua query possui palavras invalidas.
   activerecord:
+    messages:
+      save_success: '%{model} foi salvo com sucesso.'
+      update_success: '%{model} foi atualizado com sucesso.'
+      delete_success: '%{model} foi removido com sucesso.'
+    models:
+      contact: Contato
+      attributes:
+        contact:
+          name: Nome
+          state: Estado
+          role: Cargo
+          age: Idade
     errors:
       messages:
         record_invalid: 'A validação falhou: %{errors}'
