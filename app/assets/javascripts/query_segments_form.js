@@ -16,7 +16,6 @@ function QuerySegmentForm(OPERATOR_STRING, OPERATOR_INTEGER, MODEL_ATTRIBUTES_ST
 
 QuerySegmentForm.prototype = {
   new_group: function(){
-    debugger
     var group_name = this.group_name();
     var form_params = {
       group_name: group_name,
@@ -26,21 +25,22 @@ QuerySegmentForm.prototype = {
 
     var form_html = this.form_template(form_params)
     this.$container.append(form_html)
-    this.assign_form_events(group_name)
+    this.assign_group_events(group_name)
+    this.assign_form()
   },
   group_name: function(number){
     if(!number)
       number = this.$container.children().length
     return 'group-'+number
   },
-  assign_form_events: function(group_name){
+  assign_group_events: function(group_name){
     var $group = $('.'+group_name),
       integer_operators = {operators: this.OPERATOR_INTEGER},
       string_operators  = {operators: this.OPERATOR_STRING},
       me = this;
 
 
-    $group.find('.attribute_name').on('change', function(e){
+    $group.find('.attribute_name').on('change', function(){
       var name = $(this).val(),
         $value = $group.find('.value'),
         $parent = $group.find('.operator_container')
@@ -56,5 +56,24 @@ QuerySegmentForm.prototype = {
   },
   get_all_attributes: function(){
     return this.MODEL_ATTRIBUTES_STRING.concat(this.MODEL_ATTRIBUTES_INTEGER)
+  },
+  assign_form: function(){
+    var me = this;
+    $('#submit').on('click', function(e{
+      e.preventDefault();
+      console.log(me.groups_to_json())
+    })
+  },
+  groups_to_json: function(){
+    var json = {}
+    _.forEach(this.$container.children(), function(group){
+      var $group = $(group)
+      var name = $group.find('.attribute_name').val()
+      json[name] = {
+        operator: $group.find('.operator').val(),
+        value: $group.find('.value').val()
+      }
+    })
+    return json
   }
 }

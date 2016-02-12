@@ -14,12 +14,13 @@ class QuerySegment < ActiveRecord::Base
   end
 
   def params=(params)
+
     @params = params.to_json
     super
   end
 
   def params
-    JSON.parse(@params)
+    JSON.parse(@params) rescue ''
   end
 
   def params_to_query

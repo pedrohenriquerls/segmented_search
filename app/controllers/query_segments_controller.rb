@@ -24,6 +24,7 @@ class QuerySegmentsController < ApplicationController
   # POST /query_segments
   # POST /query_segments.json
   def create
+    byebug
     @query_segment = QuerySegment.new(query_segment_params)
 
     respond_to do |format|
@@ -69,7 +70,6 @@ class QuerySegmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def query_segment_params
-      byebug
-      params.fetch(:query_segment, {})
+      params.require(:query_segment).permit(:name, :params)
     end
 end
