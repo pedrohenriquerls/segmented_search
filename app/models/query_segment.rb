@@ -1,6 +1,9 @@
 require 'json'
 
 class QuerySegment < ActiveRecord::Base
+  include ActiveModel::Validations
+  validates_with QueryBlacklistValidator
+
   GROUP='group'
 
   validates_presence_of :name, :params
