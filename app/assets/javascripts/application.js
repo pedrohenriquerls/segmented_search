@@ -15,3 +15,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require handlebars
+//= require lodash
+//= require query_segments_form
