@@ -41,7 +41,7 @@ class QuerySegmentsController < ApplicationController
   def update
     respond_to do |format|
       if @query_segment.update(query_segment_params)
-        format.html { redirect_to @query_segment, notice: 'Query segment was successfully updated.' }
+        format.html { render :show, location: @query_segment, notice: 'Query segment was successfully updated.' }
         format.json { render :show, status: :ok, location: @query_segment }
       else
         format.html { render :edit }

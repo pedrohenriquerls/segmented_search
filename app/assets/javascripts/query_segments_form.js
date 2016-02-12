@@ -11,7 +11,6 @@ function QuerySegmentForm(OPERATOR_STRING, OPERATOR_INTEGER, MODEL_ATTRIBUTES_ST
   this.operator_template = Handlebars.compile(html)
   this.$container = $('#form_container')
 
-  this.new_group();
   this.assign_form()
 }
 
@@ -21,12 +20,13 @@ QuerySegmentForm.prototype = {
     var form_params = {
       group_name: group_name,
       attributes: this.get_all_attributes(),
-      operators: this.OPERATOR_STRING
+      operators: this.OPERATOR_STRING,
     }
 
     var form_html = this.form_template(form_params)
     this.$container.append(form_html)
     this.assign_group_events(group_name)
+    return group_name
   },
   group_name: function(number){
     if(!number)
@@ -75,6 +75,7 @@ QuerySegmentForm.prototype = {
       e.preventDefault();
 
       var $form = $(this).parent(),
+        _method = $('[name=_method]').val(),
         data = {
           query_segment:{
             name: $('#query_segment_name').val(),
@@ -84,7 +85,7 @@ QuerySegmentForm.prototype = {
 
       $.ajax({
         url: $form.attr('action'),
-        method: $form.attr('method'),
+        method: _method ? 'PUT':$form.attr('method'),
         data: data,
         success: function(response){
           $('body').html(response);
@@ -93,8 +94,7 @@ QuerySegmentForm.prototype = {
     })
   },
   groups_to_json: function(){
-    var json = {},
-      me = this
+    var json = {}
 
     _.forEach(this.$container.children('.bs-group'), function(group){
       var $group = $(group)
@@ -112,5 +112,16 @@ QuerySegmentForm.prototype = {
     })
 
     return json
+  },
+  edit_form: function(json){
+    var me = this
+    _.forEach(json, function(object, name){
+      var $new_group = $('.'+me.new_group())
+
+      $new_group.find('.attribute_name').val(name)
+      $new_group.find('.operator').val(object.operator)
+      $new_group.find('.value').val(object.value)
+      $new_group.next().val(object.group)
+    })
   }
 }

@@ -3,3 +3,9 @@
 <%= render 'form' %>
 
 <%= link_to 'Back', query_segments_path %>
+
+<% provide :script_view do %>
+    <script type="text/javascript">
+      form.new_group();
+    </script>
+<% end %>

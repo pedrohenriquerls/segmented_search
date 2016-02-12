@@ -4,3 +4,9 @@
 
 <%= link_to 'Show', @query_segment %> |
 <%= link_to 'Back', query_segments_path %>
+
+<% provide :script_view do %>
+    <script type="text/javascript">
+      form.edit_form(<%= raw @query_segment.criteria %>)
+    </script>
+<% end %>

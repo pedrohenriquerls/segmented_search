@@ -14,6 +14,12 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require handlebars
-//= require lodash
+//= require handlebars.js
+//= require lodash.js
 //= require query_segments_form
+
+window.Handlebars.registerHelper('select', function( value, options ){
+  var $el = $('<select />').html( options.fn(this) );
+  $el.find('[value="' + value + '"]').attr({'selected':'selected'});
+  return $el.html();
+});

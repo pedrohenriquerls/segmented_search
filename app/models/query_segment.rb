@@ -15,9 +15,13 @@ class QuerySegment < ActiveRecord::Base
     @criteria = JSON.generate(p) rescue p
   end
 
+  def criteria_to_json
+    JSON.parse(criteria)
+  end
+
   def criteria_to_query
     q  = ''
-    JSON.parse(criteria).each do |key, object|
+    criteria_to_json.each do |key, object|
       value = if Operators::MODEL_ATTRIBUTES_STRING.include? key
         "'#{object['value']}'"
       else
