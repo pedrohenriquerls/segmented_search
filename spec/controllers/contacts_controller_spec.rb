@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ContactsController, :type => :controller do
+describe ContactsController, type: :controller do
 
   subject!(:sherlock){FactoryGirl.create(:sherlock)}
   before(:each) do
