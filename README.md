@@ -14,6 +14,7 @@
 
 ###Rspec
   - docker-compose run db
+  - set docker ip on host into config/database.yml
   - make db_migration env=test
   - rspec
 
