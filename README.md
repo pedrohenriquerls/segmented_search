@@ -16,3 +16,5 @@
   - docker-compose run db
   - make db_migration env=test
   - rspec
+
+This example has been deployed on [Heroku](https://salty-stream-21230.herokuapp.com/)
