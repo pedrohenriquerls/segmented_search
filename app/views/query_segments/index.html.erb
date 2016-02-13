@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p class="bg-info"><%= notice %></p>
 
 <h1>Query Segments</h1>
 
@@ -18,7 +18,7 @@
         <td><%= query_segment.criteria_to_query %></td>
         <td><%= link_to 'Show', query_segment %></td>
         <td><%= link_to 'Edit', edit_query_segment_path(query_segment) %></td>
-        <td><%= link_to 'Destroy', query_segment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', query_segment, method: :delete %></td>
       </tr>
     <% end %>
   </tbody>

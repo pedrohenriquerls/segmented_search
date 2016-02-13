@@ -1,4 +1,6 @@
 class ContactsController < ApplicationController
+  include RedirectMessage
+
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
   # GET /contacts
@@ -28,7 +30,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.save_success', model: 'Contato') }
+        format.html { redirect contacts_url, 'save', 'Contato' }
         format.json { render :index, status: :created }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class ContactsController < ApplicationController
   def update
     respond_to do |format|
       if @contact.update(contact_params)
-        format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.update_success', model: 'Contato') }
+        format.html { redirect contacts_url, 'update', 'Contato' }
         format.json { render :index, status: :ok }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class ContactsController < ApplicationController
   def destroy
     @contact.destroy
     respond_to do |format|
-      format.html { redirect_to contacts_url, notice: I18n.t('activerecord.messages.delete_success', model: 'Contato') }
+      format.html { redirect contacts_url, 'delete', 'Contato' }
       format.json { head :no_content }
     end
   end

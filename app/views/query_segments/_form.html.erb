@@ -1,3 +1,7 @@
+<h3>Como usar? </h3>
+<p>Basta selecionar o atributo, operador(ex: '=' ou '<') e adicionar o parametro a ser pesquisado.</p>
+<p>Caso selecionar AND ou OR, uma nova linha será adicionada para concluir a consulta, para remover a linha, basta substituir AND ou OR por ''</p>
+
 <%= form_for(@query_segment) do |f| %>
   <% if @query_segment.errors.any? %>
       <% @query_segment.errors.full_messages.each do |message| %>

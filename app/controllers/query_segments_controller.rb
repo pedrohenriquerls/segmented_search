@@ -1,4 +1,7 @@
 class QuerySegmentsController < ApplicationController
+  include RedirectMessage
+  MODEL_NAME = 'Query Segment'
+
   before_action :set_query_segment, only: [:show, :edit, :update, :destroy]
 
   # GET /query_segments
@@ -27,7 +30,7 @@ class QuerySegmentsController < ApplicationController
     @query_segment = QuerySegment.new(query_segment_params)
     respond_to do |format|
       if @query_segment.save
-        format.html { redirect_to @query_segment, notice: 'Query segment was successfully created.' }
+        format.html { redirect @query_segment, 'save', MODEL_NAME }
         format.json { render :show, status: :created, location: @query_segment }
       else
         format.html { render :new }
@@ -41,7 +44,7 @@ class QuerySegmentsController < ApplicationController
   def update
     respond_to do |format|
       if @query_segment.update(query_segment_params)
-        format.html { render :show, location: @query_segment, notice: 'Query segment was successfully updated.' }
+        format.html { render :show, location: @query_segment, notice:  I18n.t('activerecord.messages.update_success', model: MODEL_NAME) }
         format.json { render :show, status: :ok, location: @query_segment }
       else
         format.html { render :edit }
@@ -55,7 +58,7 @@ class QuerySegmentsController < ApplicationController
   def destroy
     @query_segment.destroy
     respond_to do |format|
-      format.html { redirect_to query_segments_url, notice: 'Query segment was successfully destroyed.' }
+      format.html { redirect query_segments_url, 'delete', MODEL_NAME }
       format.json { head :no_content }
     end
   end
